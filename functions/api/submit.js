@@ -2,6 +2,12 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
+    if (!env?.DB) {
+      return json({
+        error: "Database binding `DB` is not configured."
+      }, 500);
+    }
+
     const data = await request.json();
 
     const name = String(data.name || "").trim();
@@ -56,7 +62,10 @@ export async function onRequestPost(context) {
     return json({ ok: true, overwritten: false });
   } catch (err) {
     console.error(err);
-    return json({ error: "Internal server error." }, 500);
+    return json({
+      error: "Internal server error.",
+      details: err instanceof Error ? err.message : String(err)
+    }, 500);
   }
 }
 
