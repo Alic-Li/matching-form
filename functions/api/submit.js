@@ -5,27 +5,79 @@ export async function onRequestPost(context) {
     const data = await request.json();
 
     const name = String(data.name || "").trim();
+    const birthday = String(data.birthday || "").trim();
     const contact = String(data.contact || "").trim();
     const socialLinks = String(data.social || "").trim();
     const intro = String(data.intro || "").trim();
     const target = String(data.target || "").trim();
+    const overwrite = Boolean(data.overwrite);
 
-    if (!name || !contact) {
-      return json({ error: "Name and contact are required." }, 400);
+    if (!name || !birthday || !contact) {
+      return json({ error: "Name, birthday and contact are required." }, 400);
     }
 
-    if (name.length > 100 || contact.length > 2000 || socialLinks.length > 3000 || intro.length > 1000 || target.length > 2000) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(birthday)) {
+      return json({ error: "Invalid birthday format." }, 400);
+    }
+
+    if (
+      name.length > 100 ||
+      contact.length > 2000 ||
+      socialLinks.length > 3000 ||
+      intro.length > 1000 ||
+      target.length > 2000
+    ) {
       return json({ error: "Submitted content is too long." }, 400);
+    }
+
+    const existing = await env.DB.prepare(
+      "SELECT id FROM submissions WHERE name = ?"
+    ).bind(name).first();
+
+    if (existing && !overwrite) {
+      return json({
+        error: "This name already exists.",
+        code: "DUPLICATE_NAME"
+      }, 409);
+    }
+
+    if (existing && overwrite) {
+      await env.DB.prepare(`
+        UPDATE submissions
+        SET birthday = ?,
+            contact = ?,
+            social_links = ?,
+            intro = ?,
+            target = ?,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE name = ?
+      `).bind(
+        birthday,
+        contact,
+        socialLinks,
+        intro,
+        target,
+        name
+      ).run();
+
+      return json({ ok: true, overwritten: true });
     }
 
     await env.DB.prepare(`
       INSERT INTO submissions
-        (name, contact, social_links, intro, target)
+        (name, birthday, contact, social_links, intro, target)
       VALUES
-        (?, ?, ?, ?, ?)
-    `).bind(name, contact, socialLinks, intro, target).run();
+        (?, ?, ?, ?, ?, ?)
+    `).bind(
+      name,
+      birthday,
+      contact,
+      socialLinks,
+      intro,
+      target
+    ).run();
 
-    return json({ ok: true });
+    return json({ ok: true, overwritten: false });
   } catch (err) {
     console.error(err);
     return json({ error: "Internal server error." }, 500);
