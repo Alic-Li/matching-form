@@ -20,16 +20,6 @@ export async function onRequestPost(context) {
       return json({ error: "Invalid birthday format." }, 400);
     }
 
-    if (
-      name.length > 100 ||
-      contact.length > 2000 ||
-      socialLinks.length > 3000 ||
-      intro.length > 1000 ||
-      target.length > 2000
-    ) {
-      return json({ error: "Submitted content is too long." }, 400);
-    }
-
     const existing = await env.DB.prepare(
       "SELECT id FROM submissions WHERE name = ?"
     ).bind(name).first();
@@ -51,14 +41,7 @@ export async function onRequestPost(context) {
             target = ?,
             updated_at = CURRENT_TIMESTAMP
         WHERE name = ?
-      `).bind(
-        birthday,
-        contact,
-        socialLinks,
-        intro,
-        target,
-        name
-      ).run();
+      `).bind(birthday, contact, socialLinks, intro, target, name).run();
 
       return json({ ok: true, overwritten: true });
     }
@@ -68,14 +51,7 @@ export async function onRequestPost(context) {
         (name, birthday, contact, social_links, intro, target)
       VALUES
         (?, ?, ?, ?, ?, ?)
-    `).bind(
-      name,
-      birthday,
-      contact,
-      socialLinks,
-      intro,
-      target
-    ).run();
+    `).bind(name, birthday, contact, socialLinks, intro, target).run();
 
     return json({ ok: true, overwritten: false });
   } catch (err) {
