@@ -21,13 +21,13 @@ export async function onRequestPost(context) {
     }
 
     const existing = await env.DB.prepare(
-      "SELECT id FROM submissions WHERE name = ?"
-    ).bind(name).first();
+      "SELECT id, name, birthday FROM submissions WHERE name = ? AND birthday = ?"
+    ).bind(name, birthday).first();
 
     if (existing && !overwrite) {
       return json({
-        error: "This name already exists.",
-        code: "DUPLICATE_NAME"
+        error: "A submission with this name and birthday already exists.",
+        code: "DUPLICATE_NAME_BIRTHDAY"
       }, 409);
     }
 
@@ -40,8 +40,8 @@ export async function onRequestPost(context) {
             intro = ?,
             target = ?,
             updated_at = CURRENT_TIMESTAMP
-        WHERE name = ?
-      `).bind(birthday, contact, socialLinks, intro, target, name).run();
+        WHERE name = ? AND birthday = ?
+      `).bind(birthday, contact, socialLinks, intro, target, name, birthday).run();
 
       return json({ ok: true, overwritten: true });
     }
