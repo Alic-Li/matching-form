@@ -15,9 +15,9 @@ form.addEventListener("submit", async (event) => {
   try {
     let result = await submitForm(data);
 
-    if (result.code === "DUPLICATE_NAME") {
+    if (result.code === "DUPLICATE_NAME_BIRTHDAY") {
       const shouldOverwrite = confirm(
-        "This name already exists. Do you want to overwrite the existing submission?"
+        "A submission with the same name and birthday already exists. Do you want to overwrite it?"
       );
 
       if (!shouldOverwrite) {
@@ -64,7 +64,7 @@ async function submitForm(data) {
     throw new Error("Server did not return valid JSON.");
   }
 
-  if (!res.ok && result.code !== "DUPLICATE_NAME") {
+  if (!res.ok && result.code !== "DUPLICATE_NAME_BIRTHDAY") {
     throw new Error(result.error || "Submission failed.");
   }
 
