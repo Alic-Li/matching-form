@@ -10,6 +10,7 @@ form.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
   submitButton.textContent = "Submitting...";
   statusBox.style.display = "none";
+  statusBox.textContent = "";
 
   try {
     const res = await fetch("/api/submit", {
@@ -20,7 +21,14 @@ form.addEventListener("submit", async (event) => {
       body: JSON.stringify(data)
     });
 
-    const result = await res.json();
+    const text = await res.text();
+
+    let result = {};
+    try {
+      result = text ? JSON.parse(text) : {};
+    } catch {
+      throw new Error("Server did not return valid JSON.");
+    }
 
     if (!res.ok) {
       throw new Error(result.error || "Submission failed.");
