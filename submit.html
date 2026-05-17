@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tell Us About Yourself</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero form-hero">
+      <a class="back-link" href="./index.html">Back to home</a>
+      <div class="badge">Matching profile intake</div>
+      <h1>Tell us about yourself</h1>
+      <p class="subtitle">
+        Share your background, contact details, and the kind of people you hope to meet. This helps our matching system build stronger, more intentional introductions.
+      </p>
+    </section>
+
+    <form id="matchingForm">
+      <div class="grid">
+        <div class="field">
+          <label for="name">Name / Nickname</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Alex, Alic, Jane" required />
+        </div>
+        <div class="field">
+          <label for="birthday">Birthday</label>
+          <input id="birthday" name="birthday" type="date" required />
+        </div>
+
+        <div class="field full">
+          <label for="contact">Contact</label>
+          <textarea
+            id="contact"
+            name="contact"
+            placeholder="Email, WeChat, Telegram, Discord, etc."
+            required
+          ></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="social">
+            Public social media links
+            <span class="hint">GitHub, X, Weibo, Xiaohongshu, LinkedIn, etc.</span>
+          </label>
+          <textarea id="social" name="social" placeholder="One link per line, for example:
+https://github.com/yourname
+https://x.com/yourname"></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="intro">One-line self introduction</label>
+          <textarea id="intro" name="intro" placeholder="Briefly introduce who you are, what you do, and what you are good at."></textarea>
+        </div>
+
+        <div class="field full">
+          <label for="target">What kind of people / projects do you want to match with?</label>
+          <textarea id="target" name="target" placeholder="For example: co-founders, engineers, designers, open-source collaborators, study partners, startup projects, etc."></textarea>
+        </div>
+      </div>
+
+      <button type="submit">Submit</button>
+
+      <div class="status" id="status">
+        Thanks! Your information has been recorded locally for now. The database API will be connected later.
+      </div>
+
+      <p class="notice">
+        This is an early profile intake page. Please only submit information you are comfortable sharing for matching purposes.
+      </p>
+    </form>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

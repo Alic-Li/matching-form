@@ -1,50 +1,53 @@
 const form = document.getElementById("matchingForm");
-const statusBox = document.getElementById("status");
-const submitButton = form.querySelector("button[type='submit']");
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+if (form) {
+  const statusBox = document.getElementById("status");
+  const submitButton = form.querySelector("button[type='submit']");
 
-  const data = Object.fromEntries(new FormData(form).entries());
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Submitting...";
-  statusBox.style.display = "none";
-  statusBox.textContent = "";
+    const data = Object.fromEntries(new FormData(form).entries());
 
-  try {
-    let result = await submitForm(data);
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+    statusBox.style.display = "none";
+    statusBox.textContent = "";
 
-    if (result.code === "DUPLICATE_NAME_BIRTHDAY") {
-      const shouldOverwrite = confirm(
-        "A submission with the same name and birthday already exists. Do you want to overwrite it?"
-      );
+    try {
+      let result = await submitForm(data);
 
-      if (!shouldOverwrite) {
-        return;
+      if (result.code === "DUPLICATE_NAME_BIRTHDAY") {
+        const shouldOverwrite = confirm(
+          "A submission with the same name and birthday already exists. Do you want to overwrite it?"
+        );
+
+        if (!shouldOverwrite) {
+          return;
+        }
+
+        result = await submitForm({
+          ...data,
+          overwrite: true
+        });
       }
 
-      result = await submitForm({
-        ...data,
-        overwrite: true
-      });
+      statusBox.textContent = result.overwritten
+        ? "Your previous submission has been updated successfully."
+        : "Thanks! Your information has been submitted successfully.";
+
+      statusBox.style.display = "block";
+      form.reset();
+
+      alert("Submission successful!");
+    } catch (err) {
+      alert(err.message || "Submission failed. Please try again later.");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit";
     }
-
-    statusBox.textContent = result.overwritten
-      ? "Your previous submission has been updated successfully."
-      : "Thanks! Your information has been submitted successfully.";
-
-    statusBox.style.display = "block";
-    form.reset();
-
-    alert("Submission successful!");
-  } catch (err) {
-    alert(err.message || "Submission failed. Please try again later.");
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = "Submit";
-  }
-});
+  });
+}
 
 async function submitForm(data) {
   const res = await fetch("/api/submit", {

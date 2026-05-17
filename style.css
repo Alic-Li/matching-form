@@ -1,13 +1,17 @@
 :root {
-  --bg: #f7f8fb;
-  --card: #ffffff;
-  --text: #1f2933;
-  --muted: #6b7280;
-  --border: #dce3ea;
-  --accent: #3584e4;
-  --accent-soft: #e8f2ff;
-  --shadow: 0 12px 32px rgba(31, 41, 51, 0.08);
-  --radius: 22px;
+  --bg: #eef4fb;
+  --bg-deep: #dce9f8;
+  --card: rgba(255, 255, 255, 0.84);
+  --card-strong: #ffffff;
+  --text: #18324d;
+  --muted: #60758c;
+  --border: rgba(120, 154, 191, 0.26);
+  --accent: #2f7de1;
+  --accent-strong: #165cc0;
+  --accent-soft: #e6f0fd;
+  --shadow: 0 18px 50px rgba(24, 50, 77, 0.12);
+  --shadow-soft: 0 12px 28px rgba(47, 125, 225, 0.16);
+  --radius: 26px;
 }
 
 * {
@@ -17,10 +21,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Segoe UI", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
   background:
-    radial-gradient(circle at top left, #e8f2ff 0, transparent 34%),
-    linear-gradient(180deg, #f7f8fb 0%, #eef2f6 100%);
+    radial-gradient(circle at top left, rgba(86, 159, 255, 0.24) 0, transparent 32%),
+    radial-gradient(circle at bottom right, rgba(22, 92, 192, 0.16) 0, transparent 28%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
   color: var(--text);
   display: flex;
   align-items: center;
@@ -28,14 +33,45 @@ body {
   padding: 32px 16px;
 }
 
+.landing-body {
+  align-items: stretch;
+  padding: 0;
+}
+
 .page {
   width: 100%;
   max-width: 760px;
 }
 
+.landing-page {
+  width: 100%;
+  max-width: 1240px;
+  padding: 42px 20px 56px;
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 28px;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(235, 244, 255, 0.92));
+  border: 1px solid rgba(120, 154, 191, 0.2);
+  border-radius: 34px;
+  padding: clamp(28px, 5vw, 54px);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  max-width: 640px;
+}
+
 .hero {
   text-align: center;
   margin-bottom: 28px;
+}
+
+.form-hero {
+  margin-bottom: 24px;
 }
 
 .badge {
@@ -47,12 +83,14 @@ body {
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 16px;
+  box-shadow: inset 0 0 0 1px rgba(47, 125, 225, 0.08);
 }
 
 h1 {
   margin: 0;
   font-size: clamp(30px, 6vw, 48px);
   letter-spacing: -0.04em;
+  line-height: 1.04;
 }
 
 .subtitle {
@@ -63,10 +101,111 @@ h1 {
   font-size: 16px;
 }
 
+.large {
+  max-width: none;
+  margin-left: 0;
+}
+
+.hero-text {
+  margin: 18px 0 0;
+  max-width: 620px;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  margin-top: 28px;
+}
+
+.primary-link,
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.primary-link {
+  min-height: 58px;
+  padding: 0 24px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.primary-link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 34px rgba(22, 92, 192, 0.24);
+}
+
+.action-note {
+  margin: 14px 0 0;
+  max-width: 520px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.image-frame {
+  width: min(100%, 430px);
+  padding: 18px;
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(228, 239, 255, 0.78));
+  border: 1px solid rgba(120, 154, 191, 0.22);
+  box-shadow: var(--shadow);
+}
+
+.image-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(120, 154, 191, 0.16);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 10px 24px rgba(24, 50, 77, 0.06);
+  backdrop-filter: blur(14px);
+}
+
+.info-card h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 15px;
+}
+
 form {
-  background: rgba(255, 255, 255, 0.86);
+  background: var(--card);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(220, 227, 234, 0.8);
+  border: 1px solid rgba(120, 154, 191, 0.26);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: clamp(22px, 5vw, 36px);
@@ -104,7 +243,7 @@ input,
 textarea {
   width: 100%;
   border: 1px solid var(--border);
-  background: #fbfcfe;
+  background: rgba(251, 253, 255, 0.94);
   border-radius: 16px;
   padding: 14px 15px;
   font-size: 15px;
@@ -123,7 +262,7 @@ input:focus,
 textarea:focus {
   border-color: var(--accent);
   background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(53, 132, 228, 0.13);
+  box-shadow: 0 0 0 4px rgba(47, 125, 225, 0.13);
 }
 
 button {
@@ -131,22 +270,29 @@ button {
   border: none;
   border-radius: 18px;
   padding: 15px 18px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
   color: white;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-  box-shadow: 0 10px 22px rgba(53, 132, 228, 0.25);
+  box-shadow: var(--shadow-soft);
 }
 
 button:hover {
   transform: translateY(-1px);
-  background: #1c71d8;
+  filter: brightness(1.02);
 }
 
 button:active {
   transform: translateY(0);
+}
+
+.back-link {
+  margin-bottom: 14px;
+  color: var(--accent-strong);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .notice {
@@ -174,6 +320,10 @@ button:active {
     padding: 24px 14px;
   }
 
+  .landing-body {
+    padding: 0;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     gap: 0;
@@ -181,5 +331,33 @@ button:active {
 
   form {
     border-radius: 20px;
+  }
+
+  .landing-page {
+    padding: 18px 14px 34px;
+  }
+
+  .hero-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+    border-radius: 28px;
+  }
+
+  .hero-copy,
+  .hero,
+  .subtitle {
+    text-align: left;
+  }
+
+  .subtitle {
+    margin-left: 0;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-frame {
+    width: 100%;
   }
 }

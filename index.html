@@ -3,73 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matching Form</title>
+  <title>Matching Web</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
-<body>
-  <main class="page">
-    <section class="hero">
-      <div class="badge">✨ Matching Survey</div>
-      <h1>Tell us about yourself</h1>
-      <p class="subtitle">
-        Share your public profile and what kind of people or projects you would like to be matched with.
-      </p>
+<body class="landing-body">
+  <main class="landing-page">
+    <section class="hero-card">
+      <div class="hero-visual">
+        <div class="image-frame">
+          <img src="./img/image.png" alt="Matching Web visual identity" />
+        </div>
+      </div>
+      <div class="hero-copy">
+        <div class="badge">AI-powered social matching</div>
+        <h1>Find the right connection behind every profile.</h1>
+        <p class="subtitle large">
+          Matching Web combines large-scale behavioral signals with LLM-driven understanding to create more meaningful introductions for friendship, collaboration, and modern social discovery.
+        </p>
+        <p class="hero-text">
+          Instead of relying on a few tags or a quick swipe, we look at context, personality, communication style, goals, and shared intent. The result is a matching experience that feels more human, more relevant, and more aligned with what people are actually looking for.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-link" href="./submit.html">Tell me about your self~</a>
+          <p class="action-note">Start with a short profile so our matching engine can understand who you are and who you want to meet.</p>
+        </div>
+      </div>
     </section>
 
-    <form id="matchingForm">
-      <div class="grid">
-        <div class="field">
-          <label for="name">Name / Nickname</label>
-          <input id="name" name="name" type="text" placeholder="e.g. Alex, Alic, Jane" required />
-        </div>
-        <div class="field">
-          <label for="birthday">Birthday</label>
-          <input id="birthday" name="birthday" type="date" required />
-        </div>
+    <section class="info-grid">
+      <article class="info-card">
+        <h2>Built for better introductions</h2>
+        <p>
+          We design matches for people who want substance: future friends, thoughtful conversations, creative partners, startup collaborators, and communities with stronger chemistry.
+        </p>
+      </article>
 
-        <div class="field full">
-          <label for="contact">Contact</label>
-          <textarea
-            id="contact"
-            name="contact"
-            placeholder="Email, WeChat, Telegram, Discord, etc."
-            required
-          ></textarea>
-        </div>
+      <article class="info-card">
+        <h2>Where data meets empathy</h2>
+        <p>
+          Our system blends structured profile data with language understanding, helping us identify compatibility patterns that are easy to miss in traditional social products.
+        </p>
+      </article>
 
-        <div class="field full">
-          <label for="social">
-            Public social media links
-            <span class="hint">GitHub, X, Weibo, Xiaohongshu, LinkedIn, etc.</span>
-          </label>
-          <textarea id="social" name="social" placeholder="One link per line, for example:
-https://github.com/yourname
-https://x.com/yourname"></textarea>
-        </div>
-
-        <div class="field full">
-          <label for="intro">One-line self introduction</label>
-          <textarea id="intro" name="intro" placeholder="Briefly introduce who you are, what you do, and what you are good at."></textarea>
-        </div>
-
-        <div class="field full">
-          <label for="target">What kind of people / projects do you want to match with?</label>
-          <textarea id="target" name="target" placeholder="For example: co-founders, engineers, designers, open-source collaborators, study partners, startup projects, etc."></textarea>
-        </div>
-      </div>
-
-      <button type="submit">Submit</button>
-
-      <div class="status" id="status">
-        Thanks! Your information has been recorded locally for now. The database API will be connected later.
-      </div>
-
-      <p class="notice">
-        This is an early survey page. Please only submit information you are comfortable sharing for matching purposes.
-      </p>
-    </form>
+      <article class="info-card">
+        <h2>More signal, less noise</h2>
+        <p>
+          Matching Web is designed to reduce shallow filtering and highlight the kind of shared energy, ambition, and emotional resonance that makes a connection worth exploring.
+        </p>
+      </article>
+    </section>
   </main>
-
-  <script src="./script.js"></script>
 </body>
 </html>
